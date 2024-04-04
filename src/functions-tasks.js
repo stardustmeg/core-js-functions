@@ -17,9 +17,7 @@
  *   getCurrentFunctionName() => 'getCurrentFunctionName'
  *
  */
-function getCurrentFunctionName() {
-  throw new Error('Not implemented');
-}
+const getCurrentFunctionName = () => getCurrentFunctionName.name;
 
 /**
  * Returns the body of the function passed as argument.
@@ -32,9 +30,7 @@ function getCurrentFunctionName() {
  *   getFunctionBody(hiHello) => "function hiHello() { console.log('hello world'); }"
  *
  */
-function getFunctionBody(/* func */) {
-  throw new Error('Not implemented');
-}
+const getFunctionBody = (func) => (!func ? '' : `${func}`);
 
 /**
  * Returns the array where each element is the count of function arguments.
@@ -50,9 +46,7 @@ function getFunctionBody(/* func */) {
  *  ]) => [0, 1, 2]
  *
  */
-function getArgumentsCount(/* funcs */) {
-  throw new Error('Not implemented');
-}
+const getArgumentsCount = (funcs) => funcs.map((func) => func.length);
 
 /**
  * Returns the math power function with the specified exponent
@@ -70,9 +64,7 @@ function getArgumentsCount(/* funcs */) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
-}
+const getPowerFunction = (exponent) => (x) => x ** exponent;
 
 /**
  * Returns the polynom function of one argument based on specified coefficients.
