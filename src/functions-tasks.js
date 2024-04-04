@@ -131,9 +131,18 @@ const memoize = (func) => {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
-}
+const retry = (func, attempts) => () => {
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    try {
+      return func();
+    } catch (error) {
+      if (attempt === attempts - 1) {
+        throw error;
+      }
+    }
+  }
+  return undefined;
+};
 
 /**
  * Returns the logging wrapper for the specified method,
@@ -203,9 +212,15 @@ const partialUsingArguments =
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
-}
+const getIdGeneratorFunction = (startFrom) => {
+  let id = startFrom;
+
+  return () => {
+    const currentId = id;
+    id += 1;
+    return currentId;
+  };
+};
 
 module.exports = {
   getCurrentFunctionName,
