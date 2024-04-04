@@ -79,9 +79,15 @@ const getPowerFunction = (exponent) => (x) => x ** exponent;
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
-}
+const getPolynom = (...coefficients) =>
+  coefficients.length !== 0
+    ? (x) =>
+        coefficients.reduce(
+          (result, coeff, index) =>
+            result + coeff * x ** (coefficients.length - 1 - index),
+          0
+        )
+    : null;
 
 /**
  * Memoizes passed function and returns function
@@ -97,9 +103,18 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
-}
+const memoize = (func) => {
+  let cachedResult;
+  let isCached = false;
+
+  return (...args) => {
+    if (!isCached) {
+      cachedResult = func(...args);
+      isCached = true;
+    }
+    return cachedResult;
+  };
+};
 
 /**
  * Returns the function trying to call the passed function and if it throws,
@@ -143,9 +158,15 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
-}
+const logger =
+  (func, logFunc) =>
+  (...args) => {
+    const argString = args.map((arg) => JSON.stringify(arg)).join(',');
+    logFunc(`${func.name}(${argString}) starts`);
+    const result = func(...args);
+    logFunc(`${func.name}(${argString}) ends`);
+    return result;
+  };
 
 /**
  * Return the function with partial applied arguments
@@ -160,9 +181,10 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
-}
+const partialUsingArguments =
+  (fn, ...args1) =>
+  (...args2) =>
+    fn(...args1, ...args2);
 
 /**
  * Returns the id generator function that returns next integer starting
